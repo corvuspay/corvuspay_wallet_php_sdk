@@ -1,6 +1,4 @@
 <?php
-require __DIR__ . '/vendor/autoload.php';
-
 // CorvusPayClient
 require __DIR__ . '/lib/CorvusPayClientInterface.php';
 require __DIR__ . '/lib/BaseCorvusPayClient.php';
@@ -19,4 +17,3 @@ require __DIR__ . '/lib/Service/ValidationService.php';
 
 //configuration files
 require __DIR__ . '/path-data.php';
-require __DIR__ . '/examples/examples-data.php';

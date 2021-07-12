@@ -11,7 +11,7 @@ Composer is a package manager for PHP. In the composer.json file in your project
 ```json
 {
   "require": {
-    "corvus-info/corvuspay_wallet_php_sdk": "main"
+    "corvus-info/corvuspay_wallet_php_sdk": "dev-main"
   },
   "repositories": [
     {
