@@ -1,5 +1,5 @@
 {
-  "name": "corvus-info/corvuspay_wallet_php_sdk",
+  "name": "corvuspay/corvuspay_wallet_php_sdk",
   "description": "CorvusPay Wallet PHP SDK",
   "license": "MIT",
   "require": {
