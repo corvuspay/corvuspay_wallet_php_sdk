@@ -23,7 +23,7 @@ class PisTransactionService extends AbstractService
         $sortedParams["signature"] = $this->calculateSignature($sortedParams);
         $sortedParams['currency_code'] = CheckoutService::CURRENCY_CODES[$params['currency_code']];
 
-        $this->validateStatus($params);
+        $this->validateStatus($sortedParams);
 
         return $this->request('check_pis_status', $sortedParams);
     }
