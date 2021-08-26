@@ -162,13 +162,13 @@ class CheckoutService extends AbstractService
         if (isset($params["cardholder_city"]) && strlen($params["cardholder_city"]) > 20) {
             throw new \InvalidArgumentException('The maximum length of cardholder_city is 20.');
         }
-        if (isset($params["cardholder_zip_code"]) && strlen($params["cardholder_zip_code"]) > 9) {
+        if (isset($params["cardholder_zip_code"]) && preg_match_all("/[0-9]/", $params["cardholder_zip_code"]) > 9) {
             throw new \InvalidArgumentException('The maximum length of cardholder_zip_code is 9.');
         }
         if (isset($params["cardholder_country"]) && strlen($params["cardholder_country"]) > 30) {
             throw new \InvalidArgumentException('The maximum length of cardholder_country is 30.');
         }
-        if (isset($params["cardholder_phone"]) && strlen($params["cardholder_phone"]) > 30) {
+        if (isset($params["cardholder_phone"]) && preg_match_all("/[0-9]/", $params["cardholder_phone"]) > 30) {
             throw new \InvalidArgumentException('The maximum length of cardholder_phone is 30.');
         }
         if (isset($params["cardholder_email"]) && strlen($params["cardholder_email"]) > 40) {
