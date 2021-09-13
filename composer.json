@@ -11,5 +11,8 @@
     "psr/log": "*",
     "ext-simplexml": "*",
     "monolog/monolog": "*"
+  },
+  "autoload": {
+    "files": ["init.php"]
   }
 }
