@@ -150,29 +150,8 @@ class CheckoutService extends AbstractService
         if (strlen($params["signature"]) > 64) {
             throw new \InvalidArgumentException('The maximum length of signature is 64.');
         }
-        if (isset($params["cardholder_name"]) && strlen($params["cardholder_name"]) > 40) {
-            throw new \InvalidArgumentException('The maximum length of cardholder_name is 40.');
-        }
-        if (isset($params["cardholder_surname"]) && strlen($params["cardholder_surname"]) > 40) {
-            throw new \InvalidArgumentException('The maximum length of cardholder_surname is 40.');
-        }
-        if (isset($params["cardholder_address"]) && strlen($params["cardholder_address"]) > 40) {
-            throw new \InvalidArgumentException('The maximum length of cardholder_address is 40.');
-        }
-        if (isset($params["cardholder_city"]) && strlen($params["cardholder_city"]) > 20) {
-            throw new \InvalidArgumentException('The maximum length of cardholder_city is 20.');
-        }
-        if (isset($params["cardholder_zip_code"]) && preg_match_all("/[0-9]/", $params["cardholder_zip_code"]) > 9) {
-            throw new \InvalidArgumentException('The maximum length of cardholder_zip_code is 9.');
-        }
-        if (isset($params["cardholder_country"]) && strlen($params["cardholder_country"]) > 30) {
-            throw new \InvalidArgumentException('The maximum length of cardholder_country is 30.');
-        }
         if (isset($params["cardholder_phone"]) && preg_match_all("/[0-9]/", $params["cardholder_phone"]) > 30) {
             throw new \InvalidArgumentException('The maximum length of cardholder_phone is 30.');
-        }
-        if (isset($params["cardholder_email"]) && strlen($params["cardholder_email"]) > 40) {
-            throw new \InvalidArgumentException('The maximum length of cardholder_email is 40.');
         }
 
         //Valid values for fields.
