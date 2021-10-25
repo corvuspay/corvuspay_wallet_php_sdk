@@ -198,7 +198,7 @@ class TransactionService extends AbstractService
         $sortedParams['store_id']      = $this->getClient()->getStoreId();
         $sortedParams['currency_code'] = CheckoutService::CURRENCY_CODES[ $params['currency_code'] ];
         $sortedParams['timestamp']     = date('YmdHis');
-        $sortedParams['version']       = "1.2";
+        $sortedParams['version']       = $this->getClient()->getApiVersion();
         $sortedParams["hash"]          = $this->calculateHash($sortedParams);
 
         $this->validateStatus($sortedParams);

@@ -43,7 +43,7 @@ abstract class AbstractService
      */
     public function calculateSignature($params)
     {
-        $sortedParameters = $params;
+    	$sortedParameters = $params;
         ksort($sortedParameters);
         $data = '';
         foreach ($sortedParameters as $key => $value) {
