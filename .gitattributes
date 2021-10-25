@@ -1,0 +1,4 @@
+/assets export-ignore
+/examples export-ignore
+/index.php export-ignore
+/.* export-ignore

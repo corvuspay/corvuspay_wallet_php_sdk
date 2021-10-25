@@ -9,7 +9,9 @@
     "ext-posix": "*",
     "ext-curl": "*",
     "psr/log": "*",
-    "ext-simplexml": "*",
+    "ext-simplexml": "*"
+  },
+  "require-dev": {
     "monolog/monolog": "*"
   },
   "autoload": {
