@@ -56,7 +56,14 @@ class ApiRequestor
     {
         $this->logger      = $logger;
         $this->environment = $environment;
+        $curl_info = curl_version();
 
+        // if ssl_version is NSS log error.
+        if (!(strpos(strtolower($curl_info['ssl_version']), 'openssl') !== false)) {
+            $this->logger->error('Incompatible ssl version of curl.');
+
+            return;
+        }
         // Create certificate file for cURL.
         $this->certificate = tempnam(sys_get_temp_dir(), '_');
         if (false === $this->certificate) {
