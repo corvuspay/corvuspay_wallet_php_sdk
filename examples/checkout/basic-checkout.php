@@ -3,6 +3,7 @@ session_id("corvuspay");
 session_start();
 require_once('../../vendor/autoload.php');
 require_once('../../init.php');
+require_once('../../path-data.php');
 require_once('../examples-data.php');
 ?>
 <!DOCTYPE html>

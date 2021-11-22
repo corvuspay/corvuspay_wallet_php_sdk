@@ -14,6 +14,3 @@ require __DIR__ . '/lib/Service/TransactionService.php';
 require __DIR__ . '/lib/Service/PisTransactionService.php';
 require __DIR__ . '/lib/Service/SubscriptionService.php';
 require __DIR__ . '/lib/Service/ValidationService.php';
-
-//configuration files
-require __DIR__ . '/path-data.php';

@@ -1,4 +1,5 @@
 /assets export-ignore
 /examples export-ignore
 /index.php export-ignore
+/path-data.php export-ignore
 /.* export-ignore
