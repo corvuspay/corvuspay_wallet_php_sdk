@@ -148,14 +148,8 @@ class CheckoutService extends AbstractService
         if (strlen($params["order_number"]) > 30) {
             throw new \InvalidArgumentException('The maximum length of order_number is 30.');
         }
-        if (strlen($params["cart"]) > 255) {
-            throw new \InvalidArgumentException('The maximum length of cart is 255.');
-        }
         if (strlen($params["signature"]) > 64) {
             throw new \InvalidArgumentException('The maximum length of signature is 64.');
-        }
-        if (isset($params["cardholder_phone"]) && preg_match_all("/[0-9]/", $params["cardholder_phone"]) > 30) {
-            throw new \InvalidArgumentException('The maximum length of cardholder_phone is 30.');
         }
 
         //Valid values for fields.
