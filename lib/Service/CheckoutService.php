@@ -38,11 +38,15 @@ class CheckoutService extends AbstractService
         'GBP' => '826', /* British pound, 100 */
         'HRK' => '191', /* Croatian kuna, 100 */
         'HUF' => '348', /* Hungarian forint, 100 */
-        'JPY' => '392', /* Japanese yen, 100 */
         'NOK' => '578', /* Norwegian krone, 100 */
         'PLN' => '985', /* Polish złoty, 100 */
         'RSD' => '941', /* Serbian dinar, 100 */
         'USD' => '840', /* United States dollar, 100 */
+        'SEK' => '752', /* Swedish krona, 100 */
+        'BHD' => '048', /* Bahraini dinar, 100 */
+        'RUB' => '643', /* Russian ruble, 100 */
+        'RON' => '946', /* Romanian leu, 100 */
+        'ISK' => '352', /* Icelandic króna, 100 */
     );
 
     /**
