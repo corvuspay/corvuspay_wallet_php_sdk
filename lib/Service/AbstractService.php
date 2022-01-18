@@ -109,8 +109,8 @@ abstract class AbstractService
         }
 
         //Length limit of fields.
-        if (strlen($params["order_number"]) > 30) {
-            throw new \InvalidArgumentException('The maximum length of order_number is 30.');
+        if (strlen($params["order_number"]) > 36) {
+            throw new \InvalidArgumentException('The maximum length of order_number is 36.');
         }
         if (strlen($params["hash"]) > 40) {
             throw new \InvalidArgumentException('The maximum length of hash is 40.');
