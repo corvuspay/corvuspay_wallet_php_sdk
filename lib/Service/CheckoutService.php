@@ -233,6 +233,8 @@ class CheckoutService extends AbstractService
     {
         echo("<form id='corvuspay' method='post' action='$link'>");
         foreach ($params as $key => $value) {
+            $key = htmlentities($key,ENT_QUOTES);
+            $value = htmlentities($value,ENT_QUOTES);
             echo("<input type='hidden' name='$key' value='$value'/>");
         }
 
