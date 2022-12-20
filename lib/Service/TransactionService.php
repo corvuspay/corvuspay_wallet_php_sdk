@@ -56,12 +56,10 @@ class TransactionService extends AbstractService
      */
     public function partiallyComplete($params = null, $xml_response = false)
     {
-        $params['store_id'] = $this->getClient()->getStoreId();
-        $params['version']  = $this->getClient()->getApiVersion();
-        $params["hash"]     = $this->calculateHash([$params["order_number"], $params["store_id"]]);
+	    $sorted_params = $this->getParamsForPartialCompleteOrPartialRefund($params);
 
-        $this->validatePartialComplete($params);
-        $response_xml = $this->request('partial_complete', $params);
+        $this->validatePartialCompleteOrPartialRefund($sorted_params);
+        $response_xml = $this->request('partial_complete', $sorted_params);
         try {
             $response = new SimpleXMLElement($response_xml);
         } catch (\Exception $e) {
@@ -127,11 +125,10 @@ class TransactionService extends AbstractService
      */
     public function partiallyRefund($params = null, $xml_response = false)
     {
-        $params['store_id'] = $this->getClient()->getStoreId();
-        $params["hash"]     = $this->calculateHash([$params["order_number"], $params["store_id"]]);
+	    $sorted_params = $this->getParamsForPartialCompleteOrPartialRefund( $params );
 
-        $this->validatePartialRefund($params);
-        $response_xml = $this->request('partial_refund', $params);
+        $this->validatePartialCompleteOrPartialRefund($sorted_params);
+        $response_xml = $this->request('partial_refund', $sorted_params);
         try {
             $response = new SimpleXMLElement($response_xml);
         } catch (\Exception $e) {
@@ -234,7 +231,7 @@ class TransactionService extends AbstractService
      * @throws \InvalidArgumentException
      *
      */
-    public function validatePartialComplete($params = [])
+    public function validatePartialCompleteOrPartialRefund($params = [])
     {
         $this->validate($params);
 
@@ -242,31 +239,17 @@ class TransactionService extends AbstractService
             throw new \InvalidArgumentException('The field new_amount is mandatory.');
         }
 
-        if (preg_match("~^[0-9]+(\.[0-9]+)?$~xD", $params["new_amount"]) === 0) {
-            throw new \InvalidArgumentException('Invalid value for new_amount.');
-        }
-    }
-
-
-    /**
-     * Validate the parameters of the request.
-     *
-     * @param array $params the parameters of the request.
-     *
-     * @throws \InvalidArgumentException
-     *
-     */
-    public function validatePartialRefund($params = [])
-    {
-        $this->validate($params);
-
-        if ( ! isset($params["new_amount"]) || $params["new_amount"] === "") {
-            throw new \InvalidArgumentException('The field new_amount is mandatory.');
-        }
+	    if ( ! isset($params["currency"]) || $params["currency"] === "") {
+		    throw new \InvalidArgumentException('The field currency is mandatory.');
+	    }
 
         if (preg_match("~^[0-9]+(\.[0-9]+)?$~xD", $params["new_amount"]) === 0) {
             throw new \InvalidArgumentException('Invalid value for new_amount.');
         }
+
+	    if ( ! array_key_exists( $params["currency"], CheckoutService::CURRENCY_CODES ) ) {
+		    throw new \InvalidArgumentException( 'Invalid value for currency.' );
+	    }
     }
 
     /**
@@ -295,5 +278,26 @@ class TransactionService extends AbstractService
             throw new \InvalidArgumentException('Invalid value for currency_code.');
         }
     }
+
+	/**
+	 * Create the body for the request to neptunus from the parameters of the client`s request.
+	 * It is used for partial complete and partial refund.
+	 *
+	 * @param array $params the parameters of the request.
+	 *
+	 * @return array the params for the neptunus request.
+	 */
+	public function getParamsForPartialCompleteOrPartialRefund($params = [])
+	{
+		$sorted_params                 = [];
+		$sorted_params["order_number"] = $params["order_number"];
+		$sorted_params["store_id"]     = $this->getClient()->getStoreId();
+		$sorted_params["version"]      = $this->getClient()->getApiVersion();
+		$sorted_params["new_amount"]   = $params["new_amount"];
+		$sorted_params["currency"]     = $params["currency"];
+		$sorted_params["hash"]         = $this->calculateHash( $sorted_params );
+
+		return $sorted_params;
+	}
 
 }

@@ -41,9 +41,10 @@ if ($_POST && ! isset($_POST["predefined"])) {
                 'account_id'   => $_POST["account_id"]
             ];
 
-            if (isset($_POST['new_amount'])) {
-                $params["new_amount"] = $_POST["new_amount"];
-            }
+	        if ( isset( $_POST['have_new_amount'] ) ) {
+		        $params["new_amount"] = $_POST["new_amount"];
+		        $params["currency"]   = $_POST["currency"];
+	        }
             //True if payment is successful or server output in xml format if error occurred.
             $res = $client->subscription->pay($params);
             //alert
@@ -145,7 +146,7 @@ require_once('../../examples/navbar.php');
             <div class="form-group">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="new_amount_id"
-                           name="new_amount" <?php if (isset($config) && isset($config["new_amount"])) echo "checked"; ?>>
+                           name="have_new_amount" <?php if (isset($config) && isset($config["have_new_amount"])) echo "checked"; ?>>
                     <label class="form-check-label" for="new_amount_id"> Different amount (string):</label>
                 </div>
             </div>
@@ -155,6 +156,23 @@ require_once('../../examples/navbar.php');
                 <input id="new_amount_id" name="new_amount" class="text_input col-sm-2"
                        value="<?php if (isset($config) && isset($config["new_amount"])) echo $config['new_amount'];
                        else echo NEW_AMOUNT_FOR_NEXT_SUB; ?>">
+            </div>
+
+            <div class="form-group row">
+                <label for="currency_code_id" class="col-sm-2 col-form-label">Currency:</label>
+                <select class="form-control-inline col-sm-2" id="currency_code_id" name="currency">
+			        <?php foreach ( \CorvusPay\Service\CheckoutService::CURRENCY_CODES as $currency => $code ) { ?>
+				        <?php if ( isset( $config ) && isset( $config["currency"] ) && $config["currency"] === $currency ) { ?>
+                            <option value="<?php echo $currency ?>"
+                                    selected="selected"><?php echo $currency ?></option>
+				        <?php } elseif ( ! $config && $currency === CURRENCY ) { ?>
+                            <option value="<?php echo $currency ?>"
+                                    selected="selected"><?php echo $currency ?></option>
+				        <?php } else { ?>
+                            <option value="<?php echo $currency ?>"><?php echo $currency ?></option>>
+				        <?php } ?><?php echo PHP_EOL;
+			        } ?>
+                </select>
             </div>
 
             <input type="submit" value="Submit" class="btn btn-primary"/>
@@ -202,6 +220,8 @@ require_once('../../examples/navbar.php');
                         <input type="hidden" name="predefined" value="">
                         <input type="hidden" name="account_id"
                                value="<?php if (isset($params) && isset($params['account_id'])) echo $params['account_id'] ?>">
+                        <input type="hidden" name="currency"
+                               value="<?php if (isset($params) && isset($params['currency'])) echo $params['currency'] ?>">
                         <button type="submit" class="btn btn-link">Partially refund</button>
                         </form><?php echo PHP_EOL;
                     } ?>

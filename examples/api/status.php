@@ -119,7 +119,7 @@ Only certificates in PKCS#12 (*.p12) format are supported.
                 <label for="currency_code_id" class="col-sm-2 col-form-label">Currency:</label>
                 <select class="form-control-inline col-sm-2" id="currency_code_id" name="currency_code">
                     <?php foreach (\CorvusPay\Service\CheckoutService::CURRENCY_CODES as $currency => $code) { ?>
-                        <?php if ($_POST && isset($_POST["currency"]) && $_POST["currency"] === $currency) { ?>
+                        <?php if ($_POST && isset($_POST["currency_code"]) && $_POST["currency_code"] === $currency) { ?>
                             <option value="<?php echo $currency ?>"
                                     selected="selected"><?php echo $currency ?></option>
                         <?php } elseif ( ! $_POST && $currency === CURRENCY) { ?>

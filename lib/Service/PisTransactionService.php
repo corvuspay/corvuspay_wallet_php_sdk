@@ -19,7 +19,7 @@ class PisTransactionService extends AbstractService
         $sortedParams['order_number'] = $params['order_number'];
         $sortedParams['store_id'] = $this->getClient()->getStoreId();
         $sortedParams['timestamp'] = date('YmdHis');
-        $sortedParams['version'] = "1.2";
+        $sortedParams['version'] = $this->getClient()->getApiVersion();
         $sortedParams["signature"] = $this->calculateSignature($sortedParams);
         $sortedParams['currency_code'] = CheckoutService::CURRENCY_CODES[$params['currency_code']];
 

@@ -166,6 +166,7 @@ if ($_POST && isset($_POST["certificate_password"])) {
                 <?php
                 if (isset($params["account_id"]))
                     echo('<input type="hidden" name="account_id" value="' . $params["account_id"] . '">') ?>
+                <input type="hidden" name="currency" value="<?php echo $params['currency'] ?>">
                 <button type="submit" class="btn btn-link">Partial complete</button>
                 </form><?php echo PHP_EOL;
             } ?>
@@ -196,6 +197,7 @@ if ($_POST && isset($_POST["certificate_password"])) {
                 <?php
                 if (isset($params["account_id"]))
                     echo('<input type="hidden" name="account_id" value="' . $params["account_id"] . '">') ?>
+                <input type="hidden" name="currency" value="<?php echo $params['currency'] ?>">
                 <button type="submit" class="btn btn-link">Partial refund</button>
                 </form><?php echo PHP_EOL;
             } ?>
@@ -211,6 +213,7 @@ if ($_POST && isset($_POST["certificate_password"])) {
                 <?php
                 if (isset($params["account_id"]))
                     echo('<input type="hidden" name="account_id" value="' . $params["account_id"] . '">') ?>
+                <input type="hidden" name="currency" value="<?php echo $params['currency'] ?>">
                 <button type="submit" class="btn btn-link">Next subscription payment</button>
                 </form><?php echo PHP_EOL;
             } ?>

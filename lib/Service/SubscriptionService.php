@@ -27,13 +27,22 @@ class SubscriptionService extends AbstractService
      */
     public function pay($params = null, $xml_response = false)
     {
-        $params['version'] = '1.3';
-        $params['subscription'] = 'true';
-        $params['store_id'] = $this->getClient()->getStoreId();
-        $params["hash"] = $this->calculateHash([$params["order_number"],$params["store_id"]]);
+	    $sorted_params                 = [];
+	    $sorted_params["order_number"] = $params["order_number"];
+	    $sorted_params["store_id"]     = $this->getClient()->getStoreId();
+	    $sorted_params["version"]      = $this->getClient()->getApiVersion();
+	    if ( isset( $params['new_amount'] ) ) {
+		    $sorted_params["new_amount"] = $params["new_amount"];
+	    }
+	    if ( isset( $params['currency'] ) ) {
+		    $sorted_params["currency"] = $params["currency"];
+	    }
+	    $sorted_params["hash"]         = $this->calculateHash( $sorted_params );
+	    $sorted_params['subscription'] = 'true';
+	    $sorted_params["account_id"]   = $params["account_id"];
 
-        $this->validateNextSubscriptionPayment($params);
-        $response_xml = $this->request('next_sub_payment', $params);
+	    $this->validateNextSubscriptionPayment( $sorted_params );
+	    $response_xml = $this->request( 'next_sub_payment', $sorted_params );
         $response = new SimpleXMLElement($response_xml);
 
         if (isset($response) && $response->{'response-code'}[0] == "0" && $xml_response === false) {
@@ -66,6 +75,13 @@ class SubscriptionService extends AbstractService
         if ( ! isset($params["version"]) || $params["version"] === "") {
             throw new \InvalidArgumentException('The field version is mandatory.');
         }
+	    if ( ( ! isset( $params["new_amount"] ) || $params["new_amount"] === "" ) && ( isset( $params["currency"] ) && $params["currency"] != "" ) ) {
+		    throw new \InvalidArgumentException( 'When you send currency, you must send the new_amount as well.' );
+	    }
+
+	    if ( ( ! isset( $params["currency"] ) || $params["currency"] === "" ) && ( isset( $params["new_amount"] ) && $params["new_amount"] != "" ) ) {
+		    throw new \InvalidArgumentException( 'When you send new_amount, you must send the currency as well.' );
+	    }
 
         if (! in_array($params["subscription"], ["true", "false"])) {
             throw new \InvalidArgumentException('Invalid value for subscription.');
@@ -74,9 +90,12 @@ class SubscriptionService extends AbstractService
             throw new \InvalidArgumentException('The maximum length of account_id is 13.');
         }
 
-        if (isset($params["new_amount"]) && preg_match("~^[0-9]+(\.[0-9]+)?$~xD", $params["new_amount"]) === 0) {
-            throw new \InvalidArgumentException('Invalid value for new_amount.');
-        }
+	    if ( isset( $params["new_amount"] ) && preg_match( "~^[0-9]+(\.[0-9]+)?$~xD", $params["new_amount"] ) === 0 ) {
+		    throw new \InvalidArgumentException( 'Invalid value for new_amount.' );
+	    }
+	    if ( isset( $params["currency"] ) && ! array_key_exists( $params["currency"], CheckoutService::CURRENCY_CODES ) ) {
+		    throw new \InvalidArgumentException( 'Invalid value for currency.' );
+	    }
     }
 
 }

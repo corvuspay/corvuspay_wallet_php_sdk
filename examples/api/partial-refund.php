@@ -38,7 +38,8 @@ if ($_POST && ! isset($_POST["predefined"])) {
             $client->setCertificate($fp, $_POST["certificate_password"]);
             $params  = [
                 'order_number' => $_POST["order_number"],
-                'new_amount'   => $_POST["new_amount"]
+                'new_amount'   => $_POST["new_amount"],
+                'currency'     => $_POST["currency"]
             ];
             $res_xml = $client->transaction->partiallyRefund($params, true);
 
@@ -150,6 +151,23 @@ require_once('../../examples/navbar.php');
                        else echo NEW_AMOUNT_FOR_PARTIAL_REFUND; ?>" required>
             </div>
 
+            <div class="form-group row">
+                <label for="currency_code_id" class="col-sm-2 col-form-label">Currency:</label>
+                <select class="form-control-inline col-sm-2" id="currency_code_id" name="currency">
+			        <?php foreach ( \CorvusPay\Service\CheckoutService::CURRENCY_CODES as $currency => $code ) { ?>
+				        <?php if ( isset( $config ) && isset( $config["currency"] ) && $config["currency"] === $currency ) { ?>
+                            <option value="<?php echo $currency ?>"
+                                    selected="selected"><?php echo $currency ?></option>
+				        <?php } elseif ( ! $config && $currency === CURRENCY ) { ?>
+                            <option value="<?php echo $currency ?>"
+                                    selected="selected"><?php echo $currency ?></option>
+				        <?php } else { ?>
+                            <option value="<?php echo $currency ?>"><?php echo $currency ?></option>>
+				        <?php } ?><?php echo PHP_EOL;
+			        } ?>
+                </select>
+            </div>
+
             <?php if (isset($config) && isset($config["account_id"])) { ?>
                 <input type="hidden" name="account_id" value="<?php echo $config['account_id'] ?>"><?php echo PHP_EOL;
             } ?>
@@ -180,6 +198,8 @@ require_once('../../examples/navbar.php');
                                value="<?php if (isset($params['account_id'])) echo $params['account_id'] ?>">
                         <input type="hidden" name="certificate_password"
                                value="<?php if (isset($config) && isset($config['certificate_password'])) echo $config['certificate_password'] ?>">
+                        <input type="hidden" name="currency"
+                               value="<?php if (isset($params['currency'])) echo $params['currency'] ?>">
                         <button type="submit" class="btn btn-link">Next subscription payment</button>
                         </form><?php echo PHP_EOL;
                     } ?>

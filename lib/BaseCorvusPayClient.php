@@ -11,10 +11,7 @@ class BaseCorvusPayClient implements CorvusPayClientInterface
     use LoggerAwareTrait;
 
     /** @var string CorvusPay API version. */
-    const API_VERSION = '1.3';
-
-    /** @var string CorvusPay PIS API version. */
-    const API_VERSION_PIS = '1.2';
+    const API_VERSION = '1.4';
 
     /** @var string CorvusPay production environment. */
     const PRODUCTION = 'prod';
