@@ -40,6 +40,9 @@ class SubscriptionService extends AbstractService
 	    $sorted_params["hash"]         = $this->calculateHash( $sorted_params );
 	    $sorted_params['subscription'] = 'true';
 	    $sorted_params["account_id"]   = $params["account_id"];
+	    if ( isset( $params['cart'] ) ) {
+		    $sorted_params["cart"] = $params["cart"];
+	    }
 
 	    $this->validateNextSubscriptionPayment( $sorted_params );
 	    $response_xml = $this->request( 'next_sub_payment', $sorted_params );

@@ -127,7 +127,8 @@ $fp = fopen("path/to/file", 'r');
 $client->setCertificate($fp, "certificate_password");
 $params = [
     'order_number' => "order_number",
-    'new_amount'   => "new_amount"
+    'new_amount'   => "new_amount",
+    'currency'     => "currency"
     ];
 $client->transaction->partiallyComplete($params);
 ```
@@ -152,7 +153,8 @@ $fp = fopen("path/to/file", 'r');
 $client->setCertificate($fp, "certificate_password");
 $params = [
     'order_number' => "order_number",
-    'new_amount'   => "new_amount"
+    'new_amount'   => "new_amount",
+    'currency'     => "currency"
     ];
 $client->transaction->partiallyRefund($params);
 ```
@@ -171,7 +173,8 @@ $params = [
 $params = [
      'order_number' => "order_number",
      'account_id'   => "account_id",
-     'new_amount'   => "new_amount"
+     'new_amount'   => "new_amount",
+     'currency'     => "currency"
      ];
 $client->subscription->pay($params);
 ```
