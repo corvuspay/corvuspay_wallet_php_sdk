@@ -10,7 +10,7 @@ $examples = ['Basic checkout'               => '/examples/checkout/basic-checkou
              'Check transaction status'     => '/examples/api/status.php',
              'Check PIS transaction status' => '/examples/api/check-pis-status.php'
 ];
-$logo_link = URL_TO_IMAGES . 'CorvusPay.svg';
+$logo_link = HORIZONTAL_LOGO_URL;
 ?>
 <nav class="navbar navbar-expand navbar-light bg-light">
     <img src="<?php echo $logo_link ?>" alt="corvuspay" style="max-width: 150px">
