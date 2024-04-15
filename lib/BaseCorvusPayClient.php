@@ -209,6 +209,30 @@ class BaseCorvusPayClient implements CorvusPayClientInterface
             throw new \InvalidArgumentException('$fileCertificate type not supported.');
     }
 
+	/**
+	 * Sets the certificate.
+	 *
+	 * @param string $crt the certificate encoded in the PEM format represented as base64 string.
+	 * @param string $key the private key encoded in the PEM format represented as base64 string.
+	 * @param string $environment the environment in which the certificate will be valid,
+	 * if this additional parameter is not specified then the environment previously defined by the user
+	 * will be taken as the environment, and if it is not defined a test environment is set.
+	 *
+	 * @throws \InvalidArgumentException
+	 */
+    public function setCertificateCrtAndKey($crt, $key, $environment = null)
+    {
+        if ($environment == null) {
+            $environment = $this->config['environment'];
+        }
+        if (gettype($crt) === "string" && gettype($key) === "string") {
+            $this->config[$environment . '_certificate_crt'] = $crt;
+            $this->config[$environment . '_certificate_key'] = $key;
+        }
+        else
+            throw new \InvalidArgumentException('type not supported');
+    }
+
     /**
      * Sends a request to CorvusPay's API.
      *
@@ -219,10 +243,19 @@ class BaseCorvusPayClient implements CorvusPayClientInterface
      */
     public function request($endpoint, $parameters)
     {
-        $requestor = new ApiRequestor($this->config[ $this->getEnvironment() . '_certificate' ],
-            $this->getEnvironment(), $this->logger);
+	    if (strpos(curl_version()['ssl_version'], 'OpenSSL/') !== false) {
+		    $requestor = new ApiRequestor($this->config[ $this->getEnvironment() . '_certificate' ],null, $this->getEnvironment(), $this->logger);
 
-        return $requestor->request($endpoint, $parameters);
+		    return $requestor->request($endpoint, $parameters);
+	    } else if (strpos(curl_version()['ssl_version'], 'NSS/') !== false || strpos(curl_version()['ssl_version'], 'GnuTLS') !== false) {
+		    $requestor = new ApiRequestor($this->config[ $this->getEnvironment() . '_certificate_crt' ],$this->config[ $this->getEnvironment() . '_certificate_key' ],
+			    $this->getEnvironment(), $this->logger);
+
+		    return $requestor->request($endpoint, $parameters);
+	    } else {
+		    $this->logger->error('Incompatible ssl version of curl.');
+		    throw new \InvalidArgumentException('SSL version not supported');
+	    }
     }
 
 }
