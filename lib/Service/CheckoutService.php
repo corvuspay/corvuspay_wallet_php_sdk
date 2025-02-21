@@ -47,6 +47,7 @@ class CheckoutService extends AbstractService
         'RUB' => '643', /* Russian ruble, 100 */
         'RON' => '946', /* Romanian leu, 100 */
         'ISK' => '352', /* Icelandic króna, 100 */
+        'MKD' => '807', /* Macedonian denar, 100 */
     );
 
     /**
