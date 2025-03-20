@@ -67,12 +67,14 @@ class CheckoutService extends AbstractService
     /**
      * Available tabs in checkout form.
      */
-    const TABS = array(
-        'checkout'    => 'Card payment',
-        'pis'         => 'Pay by IBAN',
-        'wallet'      => 'Quick wallet payment',
-        'paysafecard' => 'paysafecard',
-    );
+	const TABS = array(
+		'checkout'    => 'Card payment',
+		'pis'         => 'Pay by IBAN',
+		'wallet'      => 'Quick wallet payment',
+		'paysafecard' => 'paysafecard',
+		'applepay'    => 'Apple Pay',
+		'googlepay'   => 'Google Pay',
+	);
 
     /**
      * Function that redirects to CorvusPay checkout page.
