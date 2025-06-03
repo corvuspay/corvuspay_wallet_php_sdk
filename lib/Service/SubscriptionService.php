@@ -89,8 +89,8 @@ class SubscriptionService extends AbstractService
         if (! in_array($params["subscription"], ["true", "false"])) {
             throw new \InvalidArgumentException('Invalid value for subscription.');
         }
-        if (strlen($params["account_id"]) > 13) {
-            throw new \InvalidArgumentException('The maximum length of account_id is 13.');
+        if (strlen($params["account_id"]) > 22) {
+            throw new \InvalidArgumentException('The maximum length of account_id is 22.');
         }
 
 	    if ( isset( $params["new_amount"] ) && preg_match( "~^[0-9]+(\.[0-9]+)?$~xD", $params["new_amount"] ) === 0 ) {

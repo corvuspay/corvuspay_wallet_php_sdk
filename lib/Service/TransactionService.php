@@ -218,8 +218,8 @@ class TransactionService extends AbstractService
         if (isset($params["subscription"]) && ! in_array($params["subscription"], ["true", "false"])) {
             throw new \InvalidArgumentException('Invalid value for subscription.');
         }
-        if (isset($params["account_id"]) && strlen($params["account_id"]) > 13) {
-            throw new \InvalidArgumentException('The maximum length of account_id is 13.');
+        if (isset($params["account_id"]) && strlen($params["account_id"]) > 22) {
+            throw new \InvalidArgumentException('The maximum length of account_id is 22.');
         }
     }
 
