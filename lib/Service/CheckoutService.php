@@ -9,7 +9,7 @@ class CheckoutService extends AbstractService
      */
     const CHECKOUT_URL = [
         'prod' => 'https://wallet.corvuspay.com/checkout/',
-        'test' => 'https://test-wallet.corvuspay.com/checkout/',
+        'test' => 'https://wallet.test.corvuspay.com/checkout/'
     ];
 
     /**
