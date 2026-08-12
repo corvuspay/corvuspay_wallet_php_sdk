@@ -189,7 +189,9 @@ class ApiRequestor
      * ApiRequestor destructor.
      */
     public function __destruct() {
-	    curl_close( $this->ch );
+	    if (PHP_VERSION_ID < 80000) {
+            curl_close( $this->ch );
+        }
 	    if ( $this->ssl_version === SSlVersion::OPENSSL ) {
 		    if ( false === unlink( $this->certificate ) ) {
 			    $this->logger->error( 'Failed to unlink file : ' . $this->certificate );
